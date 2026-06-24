@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.KirundiFlash">
+
+        <!-- Splash/router: decides Login vs Dashboard based on session state -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            LoginActivity also receives the Google OAuth redirect.
+            Supabase redirects to com.kirundiflash://login-callback#access_token=...
+            after a successful Google sign-in in the browser. This intent-filter
+            lets Android route that URI back into our app instead of leaving
+            the user stuck in the browser.
+        -->
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.kirundiflash" android:host="login-callback" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".dashboard.DashboardActivity" android:exported="false" />
+        <activity android:name=".flashcards.FlashcardActivity" android:exported="false" />
+        <activity android:name=".leaderboard.LeaderboardActivity" android:exported="false" />
+        <activity android:name=".profile.ProfileActivity" android:exported="false" />
+        <activity android:name=".vip.UpgradeActivity" android:exported="false" />
+
+    </application>
+
+</manifest>
